@@ -24,6 +24,7 @@ import {
   RectangleHorizontal,
   Settings,
   Loader2,
+  RotateCcw,
 } from "lucide-react";
 
 const DEFAULT_PROMPT =
@@ -74,20 +75,35 @@ const ASPECT_RATIOS = [
   },
 ];
 
+const STORAGE_KEY = "zenith-settings";
+
+function loadSettings() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveSettings(settings: Record<string, unknown>) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+}
+
 export default function ImageGenerator() {
   const [apiKey, setApiKey] = useState("");
-  const [prompt, setPrompt] = useState(DEFAULT_PROMPT);
-  const [negativePrompt, setNegativePrompt] = useState(DEFAULT_NEGATIVE_PROMPT);
+  const [prompt, setPrompt] = useState(() => loadSettings().prompt ?? DEFAULT_PROMPT);
+  const [negativePrompt, setNegativePrompt] = useState(() => loadSettings().negativePrompt ?? DEFAULT_NEGATIVE_PROMPT);
   const [model] = useState("z-image-turbo");
-  const [width, setWidth] = useState(1024);
-  const [height, setHeight] = useState(1024);
-  const [steps, setSteps] = useState(9);
+  const [width, setWidth] = useState(() => loadSettings().width ?? 1024);
+  const [height, setHeight] = useState(() => loadSettings().height ?? 1024);
+  const [steps, setSteps] = useState(() => loadSettings().steps ?? 9);
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [status, setStatus] = useState("Ready.");
   const [elapsed, setElapsed] = useState(0);
-  const [selectedRatio, setSelectedRatio] = useState("1:1");
-  const [uhd, setUhd] = useState(false);
+  const [selectedRatio, setSelectedRatio] = useState(() => loadSettings().selectedRatio ?? "1:1");
+  const [uhd, setUhd] = useState(() => loadSettings().uhd ?? false);
   const initialized = useRef(false);
 
   useEffect(() => {
@@ -96,6 +112,12 @@ export default function ImageGenerator() {
       decryptFromStore().then(setApiKey);
     }
   }, []);
+
+  useEffect(() => {
+    if (initialized.current) {
+      saveSettings({ prompt, negativePrompt, width, height, steps, selectedRatio, uhd });
+    }
+  }, [prompt, negativePrompt, width, height, steps, selectedRatio, uhd]);
 
   const saveApiKey = (key: string) => {
     setApiKey(key);
@@ -300,6 +322,7 @@ export default function ImageGenerator() {
                           </div>
                           <div>
                             <Label className="text-zinc-400 text-xs flex items-center gap-2">
+                              <RotateCcw className="w-3 h-3 cursor-pointer hover:text-orange-400" onClick={() => setSteps(9)} />
                               Inference Steps:{" "}
                               <span className="text-orange-400 font-mono">
                                 {steps}
@@ -364,6 +387,10 @@ export default function ImageGenerator() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label className="text-zinc-400 text-xs flex items-center gap-2">
+                        <RotateCcw className="w-3 h-3 cursor-pointer hover:text-orange-400" onClick={() => {
+                          const ratio = ASPECT_RATIOS.find(r => r.label === selectedRatio)
+                          if (ratio) setWidth(uhd ? ratio.presets[1].w : ratio.presets[0].w)
+                        }} />
                         Width:{" "}
                         <span className="text-orange-400 font-mono">
                           {width}px
@@ -380,6 +407,10 @@ export default function ImageGenerator() {
                     </div>
                     <div>
                       <Label className="text-zinc-400 text-xs flex items-center gap-2">
+                        <RotateCcw className="w-3 h-3 cursor-pointer hover:text-orange-400" onClick={() => {
+                          const ratio = ASPECT_RATIOS.find(r => r.label === selectedRatio)
+                          if (ratio) setHeight(uhd ? ratio.presets[1].h : ratio.presets[0].h)
+                        }} />
                         Height:{" "}
                         <span className="text-orange-400 font-mono">
                           {height}px

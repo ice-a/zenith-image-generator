@@ -1,6 +1,6 @@
 # Z-Image
 
-[中文文档](./README.zh.md)
+[中文文档](./README.zh.md) | [Changelog](./CHANGELOG.md)
 
 A modern Text-to-Image generation web application powered by Gitee AI API (z-image-turbo model).
 

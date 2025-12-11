@@ -99,7 +99,7 @@ function FlowCanvas() {
   // Load saved state on mount
   useEffect(() => {
     loadFlowState().then((state) => {
-      if (state && state.nodes && state.nodes.length > 0) {
+      if (state?.nodes && state.nodes.length > 0) {
         // Restore images
         imagesRef.current = state.images || []
         nodeIdRef.current = state.nodeIdCounter || 0
@@ -263,7 +263,7 @@ function FlowCanvas() {
       setEdges(layoutedEdges)
       setTimeout(() => fitView({ padding: 0.2, duration: 500 }), 100)
     },
-    [nodes, edges, setNodes, setEdges, fitView, handleImageGenerated, provider]
+    [nodes, edges, setNodes, setEdges, fitView, handleImageGenerated, model]
   )
 
   return (
@@ -300,6 +300,7 @@ function FlowCanvas() {
           {nodes.length > 0 && (
             <>
               <button
+                type="button"
                 onClick={handleDownloadAll}
                 className="flex items-center gap-2 px-3 py-1.5 border border-zinc-700 rounded-lg text-zinc-400 hover:text-zinc-200 hover:border-zinc-600 transition-colors"
               >
@@ -307,6 +308,7 @@ function FlowCanvas() {
                 <span className="text-sm">Download All</span>
               </button>
               <button
+                type="button"
                 onClick={handleClearAll}
                 className="flex items-center gap-2 px-3 py-1.5 border border-zinc-700 rounded-lg text-zinc-400 hover:text-red-400 hover:border-red-600 transition-colors"
               >
@@ -316,6 +318,7 @@ function FlowCanvas() {
             </>
           )}
           <button
+            type="button"
             onClick={() => setShowSettings(true)}
             className="flex items-center gap-2 px-3 py-1.5 border border-zinc-700 rounded-lg text-zinc-400 hover:text-zinc-200 hover:border-zinc-600 transition-colors"
           >
@@ -332,6 +335,7 @@ function FlowCanvas() {
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-zinc-100 font-medium">API Configuration</h2>
               <button
+                type="button"
                 onClick={() => setShowSettings(false)}
                 className="text-zinc-500 hover:text-zinc-300"
               >

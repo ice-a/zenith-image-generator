@@ -56,6 +56,7 @@ export function ImageResultCard({
                 <div className="pointer-events-auto flex items-center gap-1 p-1.5 rounded-2xl bg-black/60 backdrop-blur-md border border-white/10 shadow-2xl transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100">
                   {/* Info */}
                   <button
+                    type="button"
                     onClick={() => setShowInfo(!showInfo)}
                     title="Details"
                     className={`flex items-center justify-center w-10 h-10 rounded-xl transition-all ${
@@ -69,6 +70,7 @@ export function ImageResultCard({
                   <div className="w-px h-5 bg-white/10" />
                   {/* 4x Upscale */}
                   <button
+                    type="button"
                     onClick={handleUpscale}
                     disabled={isUpscaling || isUpscaled}
                     title={
@@ -89,6 +91,7 @@ export function ImageResultCard({
                   <div className="w-px h-5 bg-white/10" />
                   {/* Blur Toggle */}
                   <button
+                    type="button"
                     onClick={() => setIsBlurred(!isBlurred)}
                     title="Toggle Blur"
                     className={`flex items-center justify-center w-10 h-10 rounded-xl transition-all ${
@@ -102,6 +105,7 @@ export function ImageResultCard({
                   <div className="w-px h-5 bg-white/10" />
                   {/* Download */}
                   <button
+                    type="button"
                     onClick={handleDownload}
                     title="Download"
                     className="flex items-center justify-center w-10 h-10 rounded-xl transition-all text-white/70 hover:text-white hover:bg-white/10"
@@ -110,6 +114,7 @@ export function ImageResultCard({
                   </button>
                   {/* Delete */}
                   <button
+                    type="button"
                     onClick={handleDelete}
                     title="Delete"
                     className="flex items-center justify-center w-10 h-10 rounded-xl transition-all text-white/70 hover:text-red-400 hover:bg-red-500/10"

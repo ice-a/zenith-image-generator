@@ -9,13 +9,13 @@ export function getLayoutedElements(nodes: Node[], edges: Edge[], direction: 'TB
   g.setDefaultEdgeLabel(() => ({}))
   g.setGraph({ rankdir: direction, nodesep: 50, ranksep: 80 })
 
-  nodes.forEach((node) => {
+  for (const node of nodes) {
     g.setNode(node.id, { width: NODE_WIDTH, height: NODE_HEIGHT })
-  })
+  }
 
-  edges.forEach((edge) => {
+  for (const edge of edges) {
     g.setEdge(edge.source, edge.target)
-  })
+  }
 
   dagre.layout(g)
 

@@ -136,23 +136,25 @@ export default function FloatingInput({ onSubmit, providerLabel }: FloatingInput
             <div className="flex items-center gap-1.5 text-xs text-zinc-300">
               <ImageIcon size={14} className="text-zinc-500" />
               <span className="text-zinc-500 font-medium">图片生成模式</span>
-              <span className="h-3 w-px bg-zinc-700 mx-1"></span>
+              <span className="h-3 w-px bg-zinc-700 mx-1" />
               <Sparkles size={14} className="text-yellow-500" />
               <span>{providerLabel}</span>
             </div>
           </div>
 
-          <div
+          <button
+            type="button"
             onClick={cycleBatchCount}
             className="flex items-center justify-center bg-zinc-800 rounded-full px-3 py-1 text-xs font-medium text-zinc-400 cursor-pointer hover:bg-zinc-700 transition-colors"
           >
             x{batchCount}
-          </div>
+          </button>
         </div>
       </div>
 
       {/* Floating Go Button */}
       <button
+        type="button"
         onClick={handleSubmit}
         disabled={!prompt.trim()}
         className="h-14 w-14 bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500 rounded-full flex items-center justify-center shadow-lg shadow-orange-500/30 hover:scale-110 transition-transform disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"

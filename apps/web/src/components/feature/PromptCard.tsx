@@ -125,6 +125,7 @@ export function PromptCard({
               const isSelected = selectedRatio === ratio.label
               return (
                 <button
+                  type="button"
                   key={ratio.label}
                   onClick={() => handleRatioSelect(ratio)}
                   className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg border transition-all ${

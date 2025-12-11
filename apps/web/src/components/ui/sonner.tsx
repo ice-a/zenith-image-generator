@@ -1,3 +1,4 @@
+import type * as React from 'react'
 import { Toaster as Sonner } from 'sonner'
 
 function Toaster() {

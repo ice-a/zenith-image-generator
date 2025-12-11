@@ -20,7 +20,8 @@
         "noNonNullAssertion": "off"
       },
       "suspicious": {
-        "noExplicitAny": "warn"
+        "noExplicitAny": "warn",
+        "noArrayIndexKey": "off"
       }
     }
   },
@@ -54,6 +55,6 @@
     }
   ],
   "files": {
-    "ignore": ["node_modules", "dist", ".turbo", "coverage", "*.min.js", "pnpm-lock.yaml"]
+    "ignore": ["node_modules", "dist", ".turbo", "coverage", "*.min.js", "pnpm-lock.yaml", ".wrangler"]
   }
 }

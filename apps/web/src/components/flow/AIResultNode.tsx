@@ -52,7 +52,7 @@ async function generateImageApi(
   const text = await res.text()
   if (!text) throw new Error('Empty response from server')
 
-  let data
+  let data: { error?: string; url?: string; b64_json?: string }
   try {
     data = JSON.parse(text)
   } catch {
@@ -93,6 +93,7 @@ function AIResultNode({ id, data }: NodeProps) {
     return () => clearInterval(interval)
   }, [loading])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: preloadedUrl is intentionally excluded - we only want to generate once on mount
   useEffect(() => {
     // Skip generation if image is already loaded (restored node)
     if (preloadedUrl) return
@@ -174,6 +175,7 @@ function AIResultNode({ id, data }: NodeProps) {
             <div className="absolute bottom-2 left-1/2 -translate-x-1/2 pointer-events-none">
               <div className="pointer-events-auto flex items-center gap-1 p-1 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 shadow-2xl transition-opacity duration-300 opacity-0 group-hover:opacity-100">
                 <button
+                  type="button"
                   onClick={() => setIsBlurred(!isBlurred)}
                   title="Toggle Blur"
                   className={`flex items-center justify-center w-8 h-8 rounded-lg transition-all ${
@@ -186,6 +188,7 @@ function AIResultNode({ id, data }: NodeProps) {
                 </button>
                 <div className="w-px h-4 bg-white/10" />
                 <button
+                  type="button"
                   onClick={handleDownload}
                   title="Download"
                   className="flex items-center justify-center w-8 h-8 rounded-lg transition-all text-white/70 hover:text-white hover:bg-white/10"
@@ -194,6 +197,7 @@ function AIResultNode({ id, data }: NodeProps) {
                 </button>
                 <div className="w-px h-4 bg-white/10" />
                 <button
+                  type="button"
                   onClick={() => onDelete?.(id)}
                   title="Delete"
                   className="flex items-center justify-center w-8 h-8 rounded-lg transition-all text-white/70 hover:text-red-400 hover:bg-red-500/10"

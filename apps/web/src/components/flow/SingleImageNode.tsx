@@ -34,7 +34,7 @@ async function generateImage(
   const text = await res.text()
   if (!text) throw new Error('Empty response from server')
 
-  let data
+  let data: { error?: string; url?: string; b64_json?: string }
   try {
     data = JSON.parse(text)
   } catch {
